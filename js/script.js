@@ -2,7 +2,7 @@ function setGrid(container) {
     while (container.hasChildNodes()) { // this remove all squares div of the container 
         container.removeChild(container.firstChild);
       }
-    const layout = parseInt(prompt("Enter a number to set the Grid Layout not greater than 100"));
+    const layout = parseInt(prompt("Enter a number to set the Columns Grid Layout not greater than 100"));
     console.log(layout);
     if (layout > 100 || isNaN(layout)) {
         alert("Enter a number between 1 to 100! Try again")
@@ -12,9 +12,9 @@ function setGrid(container) {
 }
 
 function createGrid() {
-    const container = document.querySelector(".main-container");
+    const container = document.querySelector(".grid-container");
     const columns = setGrid(container);
-    const squareWidth = 8;
+    const squareWidth = 500 / columns;
     const gridOf = (columns * columns);
 
     if (columns === 0){
@@ -22,27 +22,29 @@ function createGrid() {
     }
 
     container.style.gridTemplateColumns = `repeat(${columns}, auto)`
-    container.style.width = `${(columns * squareWidth)}px;`
 
     for (let i = 0;i < gridOf;i ++) {
-        const grid = document.createElement("div");
-        grid.classList.add("square");
-        grid.setAttribute("style", `height: ${squareWidth}px; width: ${squareWidth}px;`);
-        container.appendChild(grid);
+        const square = document.createElement("div");
+        square.classList.add("square");
+        square.setAttribute("style", `height: ${squareWidth}px; width: ${squareWidth}px;`);
+        container.appendChild(square);
     }
 }
 
-function changeColor() {
-    const color = prompt("Write your pencil color, e.g 'pink' or 'random' for a random colors");
+function changeColor(e) {
+    const color = e.target.value;
     const squares = document.querySelectorAll(".square");
     squares.forEach(square => square.addEventListener("mouseover", (e) => {
-        if (color === "random") {
+        e.target.style.backgroundColor = color;
+    }));
+}
+
+function randomColor() {
+    const squares = document.querySelectorAll(".square");
+    squares.forEach(square => square.addEventListener("mouseover", (e) => {
             const randomColor = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`
             e.target.style.backgroundColor = randomColor;
-        } else {
-            e.target.style.backgroundColor = color;
-        }
-    }))
+    }));
 }
 
 function wipeOutGrid() {
@@ -53,8 +55,11 @@ function wipeOutGrid() {
 const setBtn = document.querySelector("#set-btn");
 setBtn.addEventListener("click", createGrid);
 
-const colorBtn = document.querySelector("#color-btn");
-colorBtn.addEventListener("click", changeColor);
+const colorInput = document.querySelector("#color-input");
+colorInput.addEventListener("change", changeColor);
+
+const randombtn = document.querySelector("#random-btn");
+randombtn.addEventListener("click", randomColor);
 
 const eraseBtn = document.querySelector("#erase-btn");
 eraseBtn.addEventListener("click", wipeOutGrid);
