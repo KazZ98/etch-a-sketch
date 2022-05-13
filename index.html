@@ -10,13 +10,17 @@
 </head>
 <body>
     <div class="header">Etch-A-Sketch</div>
-    <div class="buttons-header">
+    <div class="buttons-container">
         <button id="set-btn">Grid Size</button>
-        <button id="color-btn">Pencil Color</button>
+        <div class="pencil-container">
+            <p>Pencil Color</p>
+            <input id="color-input" type="color" value="#FFFFFF">
+        </div>
+        <button id="random-btn">Random Colors</button>
         <button id="erase-btn">Erase</button>
     </div>
     <div class="content">
-        <div class="main-container">
+        <div class="grid-container">
 
         </div>
     </div>
